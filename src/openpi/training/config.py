@@ -726,6 +726,19 @@ _CONFIGS = [
         num_train_steps=10,
         wandb_enabled=False,
     ),
+    #
+    # My configs.
+    #
+    TrainConfig(
+        name="pi0_mydata",
+        model=pi0.Pi0Config(action_dim=7, action_horizon=10),  # adjust as needed
+        data=LeRobotLiberoDataConfig(
+            repo_id="my_username/my_lerobot_dataset",  # change to your dataset's repo_id
+            base_config=DataConfig(prompt_from_task=True),
+        ),
+        weight_loader=weight_loaders.CheckpointWeightLoader("gs://openpi-assets/checkpoints/pi0_base/params"),
+        num_train_steps=30000,  # adjust as needed
+    ),
 ]
 
 if len({config.name for config in _CONFIGS}) != len(_CONFIGS):

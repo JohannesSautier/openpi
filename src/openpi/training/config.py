@@ -733,7 +733,7 @@ _CONFIGS = [
         name="pi0_mydata",
         model=pi0.Pi0Config(action_dim=7, action_horizon=10),  # adjust as needed
         data=LeRobotLiberoDataConfig(
-            repo_id="my_username/my_lerobot_dataset",  # change to your dataset's repo_id
+            repo_id="maxdoesch/lego_pick_and_place",  # change to your dataset's repo_id
             base_config=DataConfig(prompt_from_task=True),
         ),
         weight_loader=weight_loaders.CheckpointWeightLoader("gs://openpi-assets/checkpoints/pi0_base/params"),

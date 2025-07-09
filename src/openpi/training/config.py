@@ -739,11 +739,11 @@ _CONFIGS = [
             repo_id="maxdoesch/lego_pick_and_place",
             assets=AssetsConfig(
                 # Use base model normalization stats for Franka
-                assets_dir="gs://openpi-assets/checkpoints/pi0_base/assets",
-                asset_id="franka",
+                assets_dir=None,
+                asset_id=None,
             ),
             adapt_to_pi=False,  # Convert to pi-zero action space
-            use_delta_joint_actions=True,  # Convert to delta actions
+            use_delta_joint_actions=False,  # Convert to delta actions
             repack_transforms=_transforms.Group(
                 inputs=[
                     _transforms.RepackTransform(

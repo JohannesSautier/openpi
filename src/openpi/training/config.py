@@ -730,14 +730,38 @@ _CONFIGS = [
     # My configs.
     #
     TrainConfig(
-        name="pi0_mydata",
-        model=pi0.Pi0Config(action_dim=7, action_horizon=10),  # adjust as needed
-        data=LeRobotLiberoDataConfig(
-            repo_id="maxdoesch/lego_pick_and_place",  # change to your dataset's repo_id
-            base_config=DataConfig(prompt_from_task=True),
+        name="lego_pick_place",
+        model=pi0.Pi0Config(
+            action_dim=8,  # Adjust based on your action space
+            action_horizon=10,  # Adjust based on desired prediction horizon
+        ),
+        data=LeRobotAlohaDataConfig(
+            repo_id="maxdoesch/lego_pick_and_place",
+            assets=AssetsConfig(
+                # Use base model normalization stats for Franka
+                assets_dir="gs://openpi-assets/checkpoints/pi0_base/assets",
+                asset_id="franka",
+            ),
+            adapt_to_pi=False,  # Convert to pi-zero action space
+            use_delta_joint_actions=True,  # Convert to delta actions
+            repack_transforms=_transforms.Group(
+                inputs=[
+                    _transforms.RepackTransform(
+                        {
+                            "images": {
+                                "cam_high": "observation.images.primary",
+                                "cam_left_wrist": "observation.images.wrist",
+                            },
+                            "state": "observation.state",
+                            "actions": "action",
+                        }
+                    )
+                ]
+            ),
+            action_sequence_keys=("action",),  # Adjust if your dataset uses "actions"
         ),
         weight_loader=weight_loaders.CheckpointWeightLoader("gs://openpi-assets/checkpoints/pi0_base/params"),
-        num_train_steps=30000,  # adjust as needed
+        num_train_steps=20_000,
     ),
 ]
 

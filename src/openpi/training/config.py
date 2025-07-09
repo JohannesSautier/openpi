@@ -727,7 +727,7 @@ _CONFIGS = [
         wandb_enabled=False,
     ),
     #
-    # My configs.
+    # My configs. Test Comment to see if it works 
     #
     TrainConfig(
         name="lego_pick_place",

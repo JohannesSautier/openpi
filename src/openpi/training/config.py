@@ -548,7 +548,9 @@ _CONFIGS = [
     TrainConfig(
         name="pi0_lego",
         model=pi0.Pi0Config(paligemma_variant="gemma_2b_lora", action_expert_variant="gemma_300m_lora"),
-        data=LeRobotLegoDataConfig(repo_id="lego_dataset", base_config=DataConfig(prompt_from_task=True)),
+        data=LeRobotLegoDataConfig(
+            repo_id="maxdoesch/lego_pick_and_place", base_config=DataConfig(prompt_from_task=True)
+        ),
         weight_loader=weight_loaders.CheckpointWeightLoader("s3://openpi-assets/checkpoints/pi0_base/params"),
         num_train_steps=30_000,
         # LoRA
